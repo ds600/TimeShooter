@@ -10,6 +10,7 @@ public class ShootBall : MonoBehaviour
 
     GameObject player;
     public GameObject target;
+    GameObject prefab;
 
     float speed = 60;
 
@@ -31,29 +32,21 @@ public class ShootBall : MonoBehaviour
         SpawnBall();
     }
 
+    private void Update()
+    {
+        if (prefab == null)
+        {
+            SpawnBall();
+        }
+    }
+
     void SpawnBall()
     {
-        // Instantiate the canonball prefab and set its velocity to 50 in direction of the target, ignore height difference
-        GameObject prefab = Instantiate(canonBall, canonBallStart, Quaternion.identity);
+        // Instantiate the canonball prefab and set its velocity to speed in direction of the target, ignore height difference
+        prefab = Instantiate(canonBall, canonBallStart, Quaternion.identity);
         Rigidbody rbPrefab = prefab.GetComponent<Rigidbody>();
         rbPrefab.velocity = (target.transform.position - transform.position).normalized * speed;
         rbPrefab.velocity = new Vector3(rbPrefab.velocity.x, 0, rbPrefab.velocity.z);
-
-        Invoke("SpawnBall", 10);
-        StartCoroutine(DestroyGameObject(prefab));
-
-    }
-
-    IEnumerator DestroyGameObject(GameObject prefab)
-    {
-        // Destroy the transmitted Object after 10 secs., should the player be a child of the Object, then he get removed before the destruction
-        yield return new WaitForSeconds(10);
-        if ((player.transform.position - prefab.transform.position).magnitude < 5)
-        {
-            player.transform.parent = null;
-        }
-        Destroy(prefab);
-
 
     }
 

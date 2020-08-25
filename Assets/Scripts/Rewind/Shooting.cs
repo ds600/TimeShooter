@@ -15,6 +15,11 @@ public class Shooting : MonoBehaviour
         {
             Shoot();
         }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            ShootDelete();
+        }
     }
 
     void Shoot()
@@ -30,6 +35,24 @@ public class Shooting : MonoBehaviour
                 timebody.StartRewind();
             }
             Debug.Log(hit.transform.name);
+        }
+    }
+
+    void ShootDelete()
+    {
+        // Shoot Ray that only hits things on the TimeTravel Layer
+        RaycastHit hit;
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
+        {
+            if (hit.transform.gameObject.tag == "CanonShot")
+            {
+                if ((transform.position -hit.transform.position).magnitude < 5)
+                {
+                    transform.parent = null;
+                }
+
+                Destroy(hit.transform.gameObject);
+            }
         }
     }
 }
