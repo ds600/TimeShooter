@@ -41,7 +41,11 @@ public class TimeBody : MonoBehaviour
     {
         if (pointsInTime.Count < Mathf.Round(rewindTime / Time.fixedDeltaTime))
         {
-            pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation));
+            if (pointsInTime.Count == 0 || pointsInTime[0].position != transform.position || pointsInTime[0].rotation != transform.rotation)
+            {
+                pointsInTime.Insert(0, new PointInTime(transform.position, transform.rotation));
+            }
+            
         }
         
     }

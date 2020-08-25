@@ -9,27 +9,36 @@ public class ShootBall : MonoBehaviour
     Vector3 canonBallStart;
 
     GameObject player;
+    public GameObject target;
+
+    float speed = 60;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("First Person Player");
-        canonBallStart = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z - 3);
+        
+        if (target.transform.position.z < transform.position.z)
+        {
+            canonBallStart = new Vector3(transform.position.x, transform.position.y, transform.position.z - 3);
+        } 
+        else
+        {
+            canonBallStart = new Vector3(transform.position.x, transform.position.y, transform.position.z + 3);
+        }
+        
 
         SpawnBall();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void SpawnBall()
     {
-        // Instantiate the canonball prefab and set its velocity to 50 in the "back" direction
+        // Instantiate the canonball prefab and set its velocity to 50 in direction of the target, ignore height difference
         GameObject prefab = Instantiate(canonBall, canonBallStart, Quaternion.identity);
-        prefab.GetComponent<Rigidbody>().velocity = Vector3.back * 50;
+        Rigidbody rbPrefab = prefab.GetComponent<Rigidbody>();
+        rbPrefab.velocity = (target.transform.position - transform.position).normalized * speed;
+        rbPrefab.velocity = new Vector3(rbPrefab.velocity.x, 0, rbPrefab.velocity.z);
+
         Invoke("SpawnBall", 10);
         StartCoroutine(DestroyGameObject(prefab));
 

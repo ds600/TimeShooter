@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     public float speed = 12;
 
     Vector3 velocity;
-    public float gravity = -9.81f;
+    public float gravity = -29.81f;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -21,6 +21,12 @@ public class Movement : MonoBehaviour
     public float jumpHeight = 3f;
 
     public bool isOnMovingPlatform = false;
+
+    // Start is executed once at the start of the scene
+    private void Start()
+    {
+        gravity = -29.81f;
+    }
 
     // Update is called once per frame
     void Update()

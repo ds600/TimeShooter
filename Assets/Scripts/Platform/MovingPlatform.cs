@@ -8,7 +8,7 @@ public class MovingPlatform : MonoBehaviour
 
     Vector3 startPosition;
     Vector3 newPosition;
-
+    public float distance = 12;
     int direction = 1;
 
     private void Start()
@@ -23,7 +23,7 @@ public class MovingPlatform : MonoBehaviour
 
         transform.position = newPosition;
 
-        if ((transform.position - startPosition).magnitude > 12)
+        if ((transform.position - startPosition).magnitude > distance)
         {
             direction = -1;
         }
