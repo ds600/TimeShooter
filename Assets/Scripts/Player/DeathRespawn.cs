@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeathRespawn : MonoBehaviour
 {
-    Vector3 startPoint;
+    public Vector3 startPoint;
     CharacterController ccPlayer;
     // Start is called before the first frame update
     void Start()

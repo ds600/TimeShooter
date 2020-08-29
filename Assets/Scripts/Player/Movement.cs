@@ -48,13 +48,13 @@ public class Movement : MonoBehaviour
         
         move = transform.right * x + transform.forward * z;
 
-        
 
-        if(Input.GetButtonDown("Jump") && isGrounded)
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
         }
+        
 
         velocity.y += gravity * Time.deltaTime;
 
